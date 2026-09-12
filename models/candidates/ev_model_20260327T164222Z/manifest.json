@@ -1,0 +1,94 @@
+{
+  "model": {
+    "version": "ev_model_20260327T164222Z",
+    "created_at": "2026-03-27T16:42:22+00:00",
+    "model_path": "models\\candidates\\ev_model_20260327T164222Z\\model.joblib",
+    "framework": "scikit-learn",
+    "algorithm": "DecisionTreeClassifier"
+  },
+  "dataset": {
+    "path": "ev_battery_dataset.csv",
+    "hash_sha256": "92f83844f84c6558320dbbaed721467ee39e42ea0ee6570bed9f05691a326ecd",
+    "version_ref": "sha256:92f83844f84c",
+    "rows": 1000
+  },
+  "schema": {
+    "features": [
+      "temperature",
+      "current",
+      "voltage",
+      "esp_status"
+    ],
+    "target": "label",
+    "label_mapping": {
+      "NORMAL": 0,
+      "WARNING": 1,
+      "CRITICAL": 2
+    }
+  },
+  "metrics": {
+    "accuracy": 0.995,
+    "macro_f1": 0.9954422709609432,
+    "per_class": {
+      "NORMAL": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 27
+      },
+      "WARNING": {
+        "precision": 0.9811320754716981,
+        "recall": 1.0,
+        "f1_score": 0.9904761904761905,
+        "support": 52
+      },
+      "CRITICAL": {
+        "precision": 1.0,
+        "recall": 0.9917355371900827,
+        "f1_score": 0.995850622406639,
+        "support": 121
+      }
+    }
+  },
+  "drift_baseline": {
+    "numeric": {
+      "temperature": {
+        "mean": 18.90051,
+        "std": 9.811282752010564,
+        "min": 2.02,
+        "max": 35.96
+      },
+      "current": {
+        "mean": 1.004383,
+        "std": 0.2957243282366197,
+        "min": 0.502,
+        "max": 1.499
+      },
+      "voltage": {
+        "mean": 3.59769,
+        "std": 0.2287016788307423,
+        "min": 3.2,
+        "max": 4.0
+      }
+    },
+    "categorical": {
+      "esp_status": {
+        "CONNECTED": 0.788,
+        "DISCONNECTED": 0.212
+      }
+    }
+  },
+  "training_config": {
+    "seed": 42,
+    "test_size": 0.2,
+    "max_depth": 6,
+    "dataset_path": "ev_battery_dataset.csv",
+    "dataset_hash": "92f83844f84c6558320dbbaed721467ee39e42ea0ee6570bed9f05691a326ecd",
+    "rows": 1000,
+    "label_distribution": {
+      "NORMAL": 134,
+      "WARNING": 260,
+      "CRITICAL": 606
+    }
+  }
+}

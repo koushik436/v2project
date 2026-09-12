@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+.venv
+.env
+# Expo
+.expo/
+.expo-shared/
+
+# Build
+dist/
+web-build/
+build/
+
+# Native
+android/.gradle/
+android/local.properties/
+android/app/build/
+android/app/.cxx/
+ios/Pods/
+ios/build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime output and Python caches
+logs/*.jsonl
+logs/runtime/*.log
+__pycache__/
+*.py[cod]
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary
+*.tmp
+*.temp
+
+# Expo / React Native
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+

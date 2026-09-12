@@ -1,0 +1,13 @@
+{
+  "seed": 42,
+  "test_size": 0.2,
+  "max_depth": 6,
+  "dataset_path": "ev_battery_dataset.csv",
+  "dataset_hash": "92f83844f84c6558320dbbaed721467ee39e42ea0ee6570bed9f05691a326ecd",
+  "rows": 1000,
+  "label_distribution": {
+    "NORMAL": 134,
+    "WARNING": 260,
+    "CRITICAL": 606
+  }
+}

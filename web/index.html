@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EV Mission Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="theme-normal">
+  <div class="ambient"></div>
+  <div class="mesh"></div>
+
+  <div id="staleOverlay" class="stale-overlay hidden" role="alert" aria-live="assertive">
+    <h2>Telemetry Degraded</h2>
+    <p id="overlayMessage">Waiting for a stable stream...</p>
+  </div>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="kicker">Hackathon Mission Control</p>
+        <h1>EV Battery Risk Intelligence</h1>
+      </div>
+      <div class="status-chips">
+        <span class="chip" id="connectionChip">Connection: starting</span>
+        <span class="chip" id="timestampChip">Updated: -</span>
+        <span class="chip chip-strong" id="predictionChip">Prediction: -</span>
+        <span class="chip" id="confidenceChip">Confidence: -</span>
+      </div>
+    </header>
+
+    <section class="hero-grid">
+      <article class="panel risk-hero">
+        <header>
+          <h2>Live Risk Hero</h2>
+          <span id="riskStateLabel" class="state-pill">State Unknown</span>
+        </header>
+        <div class="risk-score-wrap">
+          <p class="risk-score" id="riskScore">--</p>
+          <p class="risk-caption">Risk Score / 100</p>
+        </div>
+        <div class="trend-row">
+          <div class="trend-item">
+            <span>Temp Trend</span>
+            <strong id="tempTrend">-</strong>
+          </div>
+          <div class="trend-item">
+            <span>Current Trend</span>
+            <strong id="currentTrend">-</strong>
+          </div>
+          <div class="trend-item">
+            <span>Voltage Trend</span>
+            <strong id="voltageTrend">-</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel packet-panel">
+        <header>
+          <h2>Packet Health</h2>
+          <span id="streamBadge" class="state-pill soft">Stream</span>
+        </header>
+        <div class="metric-grid">
+          <div>
+            <label>Packets</label>
+            <p id="packetsValue">0</p>
+          </div>
+          <div>
+            <label>Parse Errors</label>
+            <p id="errorsValue">0</p>
+          </div>
+          <div>
+            <label>Packet Age</label>
+            <p id="ageValue">-</p>
+          </div>
+          <div>
+            <label>Sequence</label>
+            <p id="sequenceValue">-</p>
+          </div>
+          <div>
+            <label>Relay</label>
+            <p id="relayValue">-</p>
+          </div>
+          <div>
+            <label>Fail-Safe</label>
+            <p id="failsafeValue">NO</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="health-grid">
+      <article class="panel health-panel">
+        <header>
+          <h2>System Health</h2>
+          <span id="dataStatusBadge" class="state-pill soft">data: -</span>
+        </header>
+        <div class="health-metrics">
+          <div>
+            <label>Mode</label>
+            <p id="runtimeModeValue">-</p>
+          </div>
+          <div>
+            <label>Source</label>
+            <p id="dataSourceValue">-</p>
+          </div>
+          <div>
+            <label>Model Version</label>
+            <p id="modelVersionValue">-</p>
+          </div>
+          <div>
+            <label>Model Status</label>
+            <p id="modelStatusValue">-</p>
+          </div>
+          <div>
+            <label>Uptime</label>
+            <p id="uptimeValue">0s</p>
+          </div>
+          <div>
+            <label>Avg Latency</label>
+            <p id="avgLatencyValue">0 ms</p>
+          </div>
+          <div>
+            <label>Failure Rate</label>
+            <p id="failureRateValue">0%</p>
+          </div>
+          <div>
+            <label>Auto-Heal Count</label>
+            <p id="autoHealCountValue">0</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="telemetry-cards">
+      <article class="panel card telemetry-card">
+        <h3>Temperature</h3>
+        <p class="reading" id="temperatureValue">--</p>
+        <p class="unit">deg C</p>
+        <svg id="tempSpark" class="spark" viewBox="0 0 160 46" preserveAspectRatio="none"></svg>
+      </article>
+      <article class="panel card telemetry-card">
+        <h3>Current</h3>
+        <p class="reading" id="currentValue">--</p>
+        <p class="unit">A</p>
+        <svg id="currentSpark" class="spark" viewBox="0 0 160 46" preserveAspectRatio="none"></svg>
+      </article>
+      <article class="panel card telemetry-card">
+        <h3>Voltage</h3>
+        <p class="reading" id="voltageValue">--</p>
+        <p class="unit">V</p>
+        <svg id="voltageSpark" class="spark" viewBox="0 0 160 46" preserveAspectRatio="none"></svg>
+      </article>
+      <article class="panel card telemetry-card">
+        <h3>ESP Status</h3>
+        <p class="reading" id="espStatusValue">--</p>
+        <p class="unit" id="deviceIdValue">device: -</p>
+        <svg id="riskSpark" class="spark" viewBox="0 0 160 46" preserveAspectRatio="none"></svg>
+      </article>
+    </section>
+
+    <section class="insights-grid">
+      <article class="panel large">
+        <header>
+          <h2>Telemetry Line Chart</h2>
+        </header>
+        <canvas id="telemetryChart" height="220"></canvas>
+      </article>
+
+      <article class="panel explain-panel">
+        <header>
+          <h2>Explainability</h2>
+          <span class="state-pill soft" id="whyPrediction">Why: -</span>
+        </header>
+        <div id="featureBars" class="feature-bars"></div>
+      </article>
+    </section>
+
+    <section class="bottom-grid">
+      <article class="panel timeline-panel">
+        <header>
+          <h2>Incident Timeline</h2>
+        </header>
+        <ul id="timelineList" class="timeline-list"></ul>
+      </article>
+      <article class="panel message-panel">
+        <header>
+          <h2>System Narrative</h2>
+        </header>
+        <p id="messageText">Booting mission-control stream...</p>
+      </article>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
